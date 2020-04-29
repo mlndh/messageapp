@@ -19,8 +19,9 @@
   var database = firebase.database();
 
 function readMessages() {
-	database.ref('//').once('value',(snap)=>{
+	database.ref('//').on('value',(snap)=>{
     console.log(snap.val());
+    // dispdiv.innerHTML = snap.val()["1588150997959"].from + snap.val()["1588150997959"].message ;
   });
 }
 function readMessage() {
@@ -29,20 +30,55 @@ function readMessage() {
   });
 }
 
+function forEvery() {
+	database.ref('//').on('value',(snap)=>{
+  var displayedMessages = document.getElementById("displayed-messages");
+ displayedMessages.innerHTML = ""
+  snap.forEach(function (childSnap) {
+  var para = document.createElement("div");
+  var text = document.createElement("div");
+  text.innerText = childSnap.val().message;
+  var sender = document.createElement("div");
+  sender.innerText = childSnap.val().from;
+  var date = document.createElement("div");
+  var id = document.createElement("div");
+  date.innerText = childSnap.val().date;
+  id.innerHTML = childSnap.val().id;
+displayedMessages.insertBefore(para,displayedMessages.firstChild);
+  para.className = "style";
+  para.appendChild(text);
+  para.appendChild(sender);
+  para.appendChild(date);
+  text.className = "hej"
+  sender.className = "sender"
+  date.className = "date"
+  id.style.display = "none";
+    });   
+    
+  });
+}
 function writemessage(from, message, date) {
+  var tempdate = new Date();
+  
 var theMessage = {
 from: from,
 message: message,
-date: Date(),
+date: tempdate.toLocaleDateString() + "-" + tempdate.toTimeString().substring(0, 8),
 id: Date.now()
   };
 var updates = {};
 updates['//'  + theMessage.id] = theMessage;
 
 return firebase.database().ref().update(updates);
+
 }
 
 
 function deleteMessage(id) {
 	database.ref('/'+id+'/').remove() 
+}
+
+// FRONT END 
+function displayMessages() {
+ forEvery()
 }

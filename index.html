@@ -3,11 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Message App</title>
+    <link rel="stylesheet" href="main.css" />
+    <link href='https://fonts.googleapis.com/css?family=Poppins' rel='stylesheet'>
 </head>
 <body>
+<h1> Message App</h1>
+<main>
+  <input type="text" placeholder="Ditt namn">
+<input type="textarea" placeholder="Ditt meddelande"> 
+<button onclick="writemessage()"> Skicka</button>
+<section>
+  <div id="displayed-messages">
+</div>
+<button onclick="displayMessages()"> Ladda meddelanden</button>
+</section>
 
-
+</main>
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-functions.js"></script>
